@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0a0a0a">
+<title>Пепел Лжи — The Ash of Lies</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Special+Elite&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Грязный фон: зерно + царапины -->
+<div class="grain" aria-hidden="true"></div>
+<div class="scratches" aria-hidden="true"></div>
+<div class="vignette" aria-hidden="true"></div>
+
+<!-- Предупреждение о горизонтальной ориентации -->
+<div class="rotate-warning" aria-hidden="true">
+  <div class="rotate-icon">📱</div>
+  <p>Поверните телефон.<br>Это нуар, а не блокбастер.</p>
+</div>
+
+<!-- ЭКРАН ЗАГРУЗКИ -->
+<section class="screen screen--boot is-active" id="screen-boot">
+  <div class="boot-static"></div>
+  <div class="boot-text">
+    <p class="boot-line" data-text="LAPD CASE FILE LOADER v1.947"></p>
+    <p class="boot-line" data-text="DECRYPTING EVIDENCE..."></p>
+    <p class="boot-line" data-text="LOS ANGELES, CA"></p>
+    <p class="boot-line boot-line--ok" data-text="OK."></p>
+  </div>
+</section>
+
+<!-- ГЛАВНОЕ МЕНЮ -->
+<section class="screen screen--menu" id="screen-menu">
+  <header class="menu-header">
+    <div class="stamp">CONFIDENTIAL</div>
+    <h1 class="title">
+      <span class="title__main">Пепел<br>Лжи</span>
+      <span class="title__sub">The Ash of Lies</span>
+    </h1>
+    <p class="tagline">Лос-Анджелес. 1947. Сорок восемь часов до того, как ты сам станешь делом.</p>
+  </header>
+
+  <nav class="menu-nav" aria-label="Главное меню">
+    <button class="btn btn--primary" data-action="new-game">
+      <span class="btn__icon">🚬</span>
+      <span class="btn__label">Начать расследование</span>
+    </button>
+    <button class="btn" data-action="continue" id="btn-continue" disabled>
+      <span class="btn__icon">📁</span>
+      <span class="btn__label">Продолжить</span>
+      <span class="btn__hint" id="continue-hint">Нет сохранений</span>
+    </button>
+    <button class="btn" data-action="load-code">
+      <span class="btn__icon">🔑</span>
+      <span class="btn__label">Ввести код дела</span>
+    </button>
+    <button class="btn btn--ghost" data-action="about">
+      <span class="btn__icon">📰</span>
+      <span class="btn__label">Об игре</span>
+    </button>
+    <button class="btn btn--ghost btn--small" data-action="toggle-sound">
+      <span class="btn__icon" id="sound-icon">🔊</span>
+      <span class="btn__label" id="sound-label">Звук: вкл</span>
+    </button>
+  </nav>
+
+  <footer class="menu-footer">
+    <p class="version">DOSSIER №47-08 · BUILD 0.1</p>
+  </footer>
+</section>
+
+<!-- ЭКРАН "ОБ ИГРЕ" -->
+<section class="screen screen--about" id="screen-about">
+  <div class="paper">
+    <h2 class="paper__title">Об игре</h2>
+    <div class="paper__body">
+      <p><strong>Пепел Лжи</strong> — нуар-детектив без волшебных детекторов лжи.
+      Только ты, твой значок, и три способа задать вопрос.</p>
+      <p class="dingbat">— ✦ —</p>
+      <p>Ты — детектив <em>Джеймс «Джим» Коркоран</em>. У тебя 48 часов
+      на убийство, которое все хотят замять. У всех есть свои причины.
+      У тебя — жена, которая больше тебя не любит, и дочь, которая ещё помнит.</p>
+      <p class="dingbat">— ✦ —</p>
+      <p>Девять концовок. Ни одна из них не счастливая до конца.
+      Это нуар. Так положено.</p>
+    </div>
+    <button class="btn btn--ghost" data-action="back-to-menu">← Назад</button>
+  </div>
+</section>
+
+<!-- МОДАЛКА ВВОДА КОДА -->
+<div class="modal" id="modal-load" role="dialog" aria-labelledby="modal-load-title" aria-hidden="true">
+  <div class="modal__inner">
+    <h3 class="modal__title" id="modal-load-title">Код дела</h3>
+    <p class="modal__hint">Вставь код вида <code>NOIR-XXXX-XXXX</code></p>
+    <input type="text" class="modal__input" id="code-input" placeholder="NOIR-0000-0000" maxlength="14" autocomplete="off" spellcheck="false">
+    <p class="modal__error" id="code-error" aria-live="polite"></p>
+    <div class="modal__actions">
+      <button class="btn btn--ghost btn--small" data-action="close-modal">Отмена</button>
+      <button class="btn btn--primary btn--small" data-action="apply-code">Открыть дело</button>
+    </div>
+  </div>
+</div>
+
+<!-- ЭКРАН ВСТУПЛЕНИЯ (типографская сцена) -->
+<section class="screen screen--intro" id="screen-intro">
+  <div class="intro-frame">
+    <div class="intro-photo" aria-hidden="true">
+      <div class="intro-photo__inner"></div>
+      <div class="intro-photo__caption">L.A. · 14 OCT 1947 · 06:14 AM</div>
+    </div>
+    <div class="intro-text" id="intro-text"></div>
+    <div class="intro-controls">
+      <button class="btn btn--ghost btn--small" id="btn-skip">Пропустить ▸▸</button>
+      <button class="btn btn--primary btn--small is-hidden" id="btn-begin">Войти в участок →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ЭКРАН-ЗАГЛУШКА: первая локация (мост к будущей игре) -->
+<section class="screen screen--stub" id="screen-stub">
+  <div class="paper">
+    <div class="case-header">
+      <div class="case-header__stamp">CASE №47-08</div>
+      <h2 class="paper__title">Участок · Центральный отдел</h2>
+      <p class="case-header__date">14 октября 1947, 07:02</p>
+    </div>
+    <div class="paper__body">
+      <p>Кофе уже остыл. Капитан Брэдли курит у окна, не глядя в твою сторону.</p>
+      <p>На столе — папка. На папке — имя: <strong>Майкл «Маленький Майк» Вероне</strong>.
+      В кармане убитого — спичечный коробок из «Пантеона».</p>
+      <p>У тебя 48 часов. Часы уже пошли.</p>
+      <p class="dingbat">— ✦ —</p>
+      <p class="muted">[ Здесь начинается дело. Следующая глава — на подходе. ]</p>
+    </div>
+    <button class="btn btn--ghost" data-action="back-to-menu">← В меню</button>
+  </div>
+</section>
+
+<script src="game.js"></script>
+</body>
+</html>
